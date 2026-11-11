@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PIVO LIVE</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#100c16;color:white;font-family:Arial}
+header{background:#1b1425;padding:22px 5%;border-bottom:1px solid #392b49}
+.logo{font-size:27px;font-weight:bold;color:#b58aff}
+main{max-width:1400px;margin:30px auto;padding:0 20px}
+.channels{display:flex;gap:12px;margin:20px 0;flex-wrap:wrap}
+button{background:#342343;color:white;border:1px solid #59416f;padding:14px 20px;border-radius:10px;cursor:pointer}
+button.active{background:#9147ff}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:15px}
+.panel{background:#1c1624;border:1px solid #392b49;border-radius:13px;overflow:hidden}
+iframe{border:0;width:100%;display:block}
+#video{aspect-ratio:16/9}
+#chat{height:600px}
+.info{padding:15px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}#chat{height:400px}}
+</style>
+</head>
+<body>
+<header><div class="logo">🍺 PIVO LIVE</div></header>
+<main>
+<h1>Твои любимые стримеры</h1>
+<p style="color:#aaa">Выбери трансляцию:</p>
+<div class="channels">
+<button id="b1" onclick="load('yurapivo')">🍺 Юра Пиво</button>
+<button id="b2" onclick="load('r4dom1r_')">🎮 Рома Радамир</button>
+</div>
+<div class="layout">
+<section class="panel">
+<iframe id="video" allowfullscreen allow="autoplay;fullscreen" title="Twitch player"></iframe>
+<div class="info"><h2 id="title">Выбери канал</h2><span>Официальный Twitch-плеер</span></div>
+</section>
+<section class="panel">
+<div class="info"><b>💬 Чат</b></div>
+<iframe id="chat" title="Twitch chat"></iframe>
+</section>
+</div>
+</main>
+<script>
+function load(channel){
+const parent=location.hostname;
+document.getElementById('title').textContent=channel;
+document.getElementById('video').src=
+'https://player.twitch.tv/?channel='+encodeURIComponent(channel)+
+'&parent='+encodeURIComponent(parent)+'&muted=true';
+document.getElementById('chat').src=
+'https://www.twitch.tv/embed/'+encodeURIComponent(channel)+
+'/chat?parent='+encodeURIComponent(parent)+'&darkpopout';
+document.getElementById('b1').classList.toggle('active',channel==='yurapivo');
+document.getElementById('b2').classList.toggle('active',channel==='r4dom1r_');
+}
+load('yurapivo');
+</script>
+</body>
+</html>
